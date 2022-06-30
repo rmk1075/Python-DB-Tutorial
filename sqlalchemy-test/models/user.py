@@ -5,8 +5,11 @@ from sqlalchemy import Column, Integer, String
 class User(ModelBase):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
-    user_id = Column(String, nullable=False)
-    name = Column(String, nullable=False)  
+    user_id = Column(String, nullable=False, unique=True)
+    name = Column(String, nullable=False)
+
+    def __repr__(self):
+        return f'<User::id={self.id} user_id={self.user_id} name={self.name}>'
 
     @classmethod
     def get(cls, **kwargs):
@@ -17,5 +20,6 @@ class User(ModelBase):
     def create(cls, user_id: str, name: str):
         user = cls(user_id=user_id, name=name)
         cls.session.add(user)
+        cls.session.commit()
         return user
 
