@@ -18,8 +18,12 @@ class User(ModelBase):
 
     @classmethod
     def create(cls, user_id: str, name: str):
-        user = cls(user_id=user_id, name=name)
-        cls.session.add(user)
-        cls.session.commit()
+        user = None
+        try:
+            user = cls(user_id=user_id, name=name)
+            cls.session.add(user)
+            cls.session.commit()
+        except Exception as e:
+            print(traceback.format_exc())
+            cls.session.rollback()
         return user
-

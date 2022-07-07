@@ -8,6 +8,8 @@ def run():
     print(service.get_users())
     print(service.add_user(user_id='test_id', name='test_name'))
     print(service.get_users())
+    print(service.add_user(user_id='test_id', name='test_name'))
+    print(service.get_users())
 
 
 if __name__ == '__main__':
