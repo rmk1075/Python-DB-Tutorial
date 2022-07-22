@@ -10,20 +10,3 @@ class User(ModelBase):
 
     def __repr__(self):
         return f'<User::id={self.id} user_id={self.user_id} name={self.name}>'
-
-    @classmethod
-    def get(cls, **kwargs):
-        users = cls.session.query(cls).all()
-        return users
-
-    @classmethod
-    def create(cls, user_id: str, name: str):
-        user = None
-        try:
-            user = cls(user_id=user_id, name=name)
-            cls.session.add(user)
-            cls.session.commit()
-        except Exception as e:
-            print(traceback.format_exc())
-            cls.session.rollback()
-        return user

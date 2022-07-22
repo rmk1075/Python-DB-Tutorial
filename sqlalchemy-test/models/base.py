@@ -20,3 +20,51 @@ class ModelBase(Base):
     __abstract__ = True
     session = Session()
     
+    @classmethod
+    def _exec(cls, method: any, **kwargs):
+        try:
+            result = method(cls.session, **kwargs)
+            cls.session.commit()
+        except Exception as e:
+            print(traceback.print_exc())
+            result = None
+            cls.session.rollback()
+        return result
+    
+    @classmethod
+    def _read(cls, session: Session, id: any):
+        return session.query(cls).filter(cls.id == id).first()
+    
+    @classmethod
+    def _read_all(cls, session: Session):
+        return session.query(cls).all()
+    
+    @classmethod
+    def _add(cls, session: Session, obj: any):
+        session.add(obj)
+        return obj
+
+    @classmethod
+    def _delete(cls, session: Session, obj: any):
+        session.delete(obj)
+    
+    @classmethod
+    def create(cls, **kwargs):
+        obj = cls(**kwargs)
+        return cls._exec(cls._add, obj=obj)
+    
+    @classmethod
+    def get(cls, id: any):
+        return cls._exec(cls._read, id=id)
+    
+    @classmethod
+    def get_all(cls):
+        return cls._exec(cls._read_all)
+    
+    @classmethod
+    def update(cls, obj: any):
+        return cls._exec(cls._add, obj=obj)
+    
+    @classmethod
+    def delete(cls, obj: any):
+        return cls._exec(cls._remove, obj=obj)
