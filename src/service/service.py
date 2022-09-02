@@ -1,6 +1,6 @@
 from models.user import User, Team
 
-class Service():
+class UserService():
     def __init__(self):
         pass
     

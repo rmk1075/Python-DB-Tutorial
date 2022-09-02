@@ -1,8 +1,9 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Column, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 import traceback
+
 
 # DB_URL = 'sqlite:///test.db'
 DB_URL = 'sqlite:///:memory:' # in-memory database 사용
@@ -19,6 +20,7 @@ def init_db():
 class ModelBase(Base):
     __abstract__ = True
     session = Session()
+    id = Column(Integer, primary_key=True, unique=True, autoincrement=True) # autoincremented id for every database table
     
     @classmethod
     def _exec(cls, method: any, **kwargs):

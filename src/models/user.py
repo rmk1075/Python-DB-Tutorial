@@ -6,7 +6,6 @@ from sqlalchemy.orm import relationship
 
 class User(ModelBase):
     __tablename__ = 'user'
-    id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     user_id = Column(String, nullable=False, unique=True)
     name = Column(String, nullable=False)
     team_id = Column(Integer, ForeignKey("team.id"))
