@@ -5,7 +5,6 @@ from sqlalchemy.orm import relationship
 
 class Team(ModelBase):
     __tablename__ = 'team'
-    id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     name = Column(String, nullable=False)
     users = relationship("User", back_populates="team")
 
